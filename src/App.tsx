@@ -1,10 +1,14 @@
 import { FC } from 'react';
 
+import MainLayout from './layout/MainLayout';
+
+import HomePage from './pages/HomePage/HomePage';
+
 const App: FC = () => {
 	return (
-		<div>
-			<h1>Hello Vite React App</h1>
-		</div>
+		<MainLayout>
+			<HomePage />
+		</MainLayout>
 	);
 };
 
