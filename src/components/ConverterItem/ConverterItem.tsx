@@ -6,6 +6,7 @@ import s from './ConverterItem.module.scss';
 
 const ConverterItem: FC = () => {
 	const [currency, setCurrency] = useState<string>('USD');
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setCurrency(event.target.value);
 	};
