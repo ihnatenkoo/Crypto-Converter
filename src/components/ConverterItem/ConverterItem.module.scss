@@ -1,8 +1,15 @@
-.converter_item {
-	display: flex;
-	gap: 8px;
+.converter {
+	&__item {
+		display: flex;
+		gap: 8px;
 
-	div {
-		flex: 1;
+		div {
+			flex: 1;
+		}
+	}
+
+	&__img {
+		width: 25px;
+		height: 25px;
 	}
 }

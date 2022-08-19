@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from 'react';
-import axios from 'axios';
+import { FC, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,9 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import s from './CurrencyTable.module.scss';
+import currenciesStore from '../../stores/currenciesStore';
+import converterStore from '../../stores/converterStore';
 
-import { transformCoinsData } from '../../utils/transformCoinsData';
+import s from './CurrencyTable.module.scss';
 
 export interface ICoin {
 	name: string;
@@ -21,24 +22,12 @@ export interface ICoin {
 	volume24Hour: number;
 }
 
-const CurrencyTable: FC = () => {
-	const [allCoins, setAllCoins] = useState<Array<ICoin>>([]);
-
-	const getData = async () => {
-		try {
-			const response = await axios.get(
-				'https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD'
-			);
-
-			const data = transformCoinsData(response.data.Data);
-			setAllCoins(data);
-		} catch (error) {
-			console.error(error);
-		}
-	};
+const CurrencyTable: FC = observer(() => {
+	const allCoins = currenciesStore.getCoins;
+	const setSelectedCoin = converterStore.setSelectedCoin;
 
 	useEffect(() => {
-		getData();
+		currenciesStore.fetchCoins();
 	}, []);
 
 	return (
@@ -56,7 +45,11 @@ const CurrencyTable: FC = () => {
 				<TableBody>
 					{allCoins &&
 						allCoins.map((coin) => (
-							<TableRow key={coin.name}>
+							<TableRow
+								key={coin.name}
+								className={s.row}
+								onClick={() => setSelectedCoin(coin.name)}
+							>
 								<TableCell component="th" scope="row">
 									<img src={coin.imageUrl} alt="coin icon" className={s.img} />
 								</TableCell>
@@ -70,6 +63,6 @@ const CurrencyTable: FC = () => {
 			</Table>
 		</TableContainer>
 	);
-};
+});
 
 export default CurrencyTable;

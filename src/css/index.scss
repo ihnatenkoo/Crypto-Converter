@@ -1,3 +1,5 @@
+@import './mui.scss';
+
 :root {
 	font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
 	font-size: 16px;
@@ -60,8 +62,4 @@ button:focus-visible {
 	button {
 		background-color: #f9f9f9;
 	}
-}
-
-.s {
-	margin-top: 50px;
 }

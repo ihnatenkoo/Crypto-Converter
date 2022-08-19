@@ -4,3 +4,12 @@
 	width: 35px;
 	height: 35px;
 }
+
+.row {
+	cursor: pointer;
+	transition: all 0.15s linear;
+
+	&:hover {
+		background-color: #e5e7eb;
+	}
+}
