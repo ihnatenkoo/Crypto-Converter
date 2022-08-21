@@ -5,6 +5,7 @@ import { transformCoinsData } from '../utils/transformCoinsData';
 
 class CurrenciesStore {
 	private coins: Array<ICoin> = [];
+	private selectedCoin = '';
 
 	constructor() {
 		makeAutoObservable(this);
@@ -13,6 +14,14 @@ class CurrenciesStore {
 	get getCoins() {
 		return this.coins;
 	}
+
+	get getSelectedCoin() {
+		return this.selectedCoin;
+	}
+
+	setSelectedCoin = (name: string): void => {
+		this.selectedCoin = name;
+	};
 
 	setCoins = (items: Array<ICoin>): void => {
 		this.coins = items;

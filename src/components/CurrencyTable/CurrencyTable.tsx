@@ -10,7 +10,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import currenciesStore from '../../stores/currenciesStore';
-import converterStore from '../../stores/converterStore';
 
 import s from './CurrencyTable.module.scss';
 
@@ -24,7 +23,7 @@ export interface ICoin {
 
 const CurrencyTable: FC = observer(() => {
 	const allCoins = currenciesStore.getCoins;
-	const setSelectedCoin = converterStore.setSelectedCoin;
+	const setSelectedCoin = currenciesStore.setSelectedCoin;
 
 	useEffect(() => {
 		currenciesStore.fetchCoins();

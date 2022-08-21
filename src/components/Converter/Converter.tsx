@@ -13,20 +13,32 @@ import s from './Converter.module.scss';
 
 const Converter: FC = observer(() => {
 	const allCoins = currenciesStore.getCoins;
+	const selectedCoin = currenciesStore.getSelectedCoin;
+	const initialFrom = allCoins[0]?.name ?? '';
+	const initialTo = allCoins[1]?.name ?? '';
 
 	const [fromCurrency, setFromCurrency] = useState<string>('');
 	const [toCurrency, setToCurrency] = useState<string>('');
 	const [exchangeRate, setExchangeRate] = useState<number>(0);
-	const [amount, setAmount] = useState<number>(1);
+	const [amount, setAmount] = useState<number>(0);
 	const [amountInFromCurrency, setAmountInFromCurrency] =
 		useState<boolean>(true);
+
+	useEffect(() => {
+		setFromCurrency(selectedCoin || initialFrom);
+		setToCurrency(initialTo);
+	}, [initialFrom, initialTo, selectedCoin]);
+
+	useEffect(() => {
+		getExchangeRate();
+	}, [fromCurrency, toCurrency]);
 
 	let toAmount, fromAmount;
 	if (amountInFromCurrency) {
 		fromAmount = amount;
-		toAmount = +(amount * exchangeRate).toFixed(10);
+		toAmount = +(amount * exchangeRate).toFixed(7);
 	} else {
-		fromAmount = +(amount / exchangeRate).toFixed(10);
+		fromAmount = +(amount / exchangeRate).toFixed(7);
 		toAmount = amount;
 	}
 
@@ -49,10 +61,6 @@ const Converter: FC = observer(() => {
 		if (priceFrom && priceTo) setExchangeRate(priceFrom / priceTo);
 	};
 
-	useEffect(() => {
-		getExchangeRate();
-	}, [fromCurrency, toCurrency]);
-
 	return (
 		<Paper elevation={2}>
 			<Box
@@ -73,7 +81,9 @@ const Converter: FC = observer(() => {
 					value={toAmount}
 					onChangeValue={handleToAmountChange}
 				/>
-				<Typography variant="h6">Total:</Typography>
+				<Typography variant="overline">
+					1 {fromCurrency} = {exchangeRate} {toCurrency}
+				</Typography>
 			</Box>
 		</Paper>
 	);

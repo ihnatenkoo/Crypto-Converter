@@ -18,9 +18,11 @@ interface IConverterItem {
 const ConverterItem: FC<IConverterItem> = observer(
 	({ currency, onChangeCurrency, value, onChangeValue }) => {
 		const allCoins = currenciesStore.getCoins;
+		const setSelectedCoin = currenciesStore.setSelectedCoin;
 
 		const changeCurrencyHandler = (e: ChangeEvent<HTMLInputElement>) => {
 			onChangeCurrency(e.target.value);
+			setSelectedCoin('');
 		};
 
 		return (
