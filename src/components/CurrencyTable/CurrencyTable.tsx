@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import Table from '@mui/material/Table';
@@ -25,42 +25,61 @@ const CurrencyTable: FC = observer(() => {
 	const allCoins = currenciesStore.getCoins;
 	const setSelectedCoin = currenciesStore.setSelectedCoin;
 
+	const [activeRow, setActiveRow] = useState('');
+
 	useEffect(() => {
 		currenciesStore.fetchCoins();
 	}, []);
 
+	useEffect(() => {
+		setActiveRow(allCoins[0]?.name ?? '');
+	}, [allCoins]);
+
+	const handleRowClick = (name: string) => {
+		setSelectedCoin(name);
+		setActiveRow(name);
+	};
+
 	return (
-		<TableContainer component={Paper} elevation={2}>
-			<Table sx={{ minWidth: 650 }} aria-label="simple table">
-				<TableHead>
-					<TableRow>
-						<TableCell></TableCell>
-						<TableCell align="left">Name</TableCell>
-						<TableCell align="left">Abbrev</TableCell>
-						<TableCell align="left">Cost</TableCell>
-						<TableCell align="left">24h</TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{allCoins &&
-						allCoins.map((coin) => (
-							<TableRow
-								key={coin.name}
-								className={s.row}
-								onClick={() => setSelectedCoin(coin.name)}
-							>
-								<TableCell component="th" scope="row">
-									<img src={coin.imageUrl} alt="coin icon" className={s.img} />
-								</TableCell>
-								<TableCell>{coin.fullName}</TableCell>
-								<TableCell>{coin.name}</TableCell>
-								<TableCell>${coin.price}</TableCell>
-								<TableCell>${coin.volume24Hour}</TableCell>
-							</TableRow>
-						))}
-				</TableBody>
-			</Table>
-		</TableContainer>
+		<Paper sx={{ width: '100%', overflow: 'hidden' }} elevation={2}>
+			<TableContainer sx={{ maxHeight: 533 }} className={s.table}>
+				<Table stickyHeader aria-label="sticky table">
+					<TableHead className={s.head}>
+						<TableRow>
+							<TableCell></TableCell>
+							<TableCell align="left">Name</TableCell>
+							<TableCell align="left">Abbrev</TableCell>
+							<TableCell align="left">Cost</TableCell>
+							<TableCell align="left">24h</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{allCoins &&
+							allCoins.map((coin) => (
+								<TableRow
+									key={coin.name}
+									className={`${s.row} ${
+										activeRow === coin.name ? s.active : ''
+									}`}
+									onClick={() => handleRowClick(coin.name)}
+								>
+									<TableCell component="th" scope="row">
+										<img
+											src={coin.imageUrl}
+											alt="coin icon"
+											className={s.img}
+										/>
+									</TableCell>
+									<TableCell>{coin.fullName}</TableCell>
+									<TableCell>{coin.name}</TableCell>
+									<TableCell>${coin.price}</TableCell>
+									<TableCell>${coin.volume24Hour}</TableCell>
+								</TableRow>
+							))}
+					</TableBody>
+				</Table>
+			</TableContainer>
+		</Paper>
 	);
 });
 

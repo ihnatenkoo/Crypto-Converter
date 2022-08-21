@@ -5,11 +5,11 @@ import CurrencyTable from '../../components/CurrencyTable/CurrencyTable';
 
 const HomePage = () => {
 	return (
-		<Grid container spacing={2}>
-			<Grid item xs={12} sm={8}>
+		<Grid container spacing={2} wrap="wrap-reverse">
+			<Grid item xs={12} lg={8}>
 				<CurrencyTable />
 			</Grid>
-			<Grid item xs={12} sm={4}>
+			<Grid item xs={12} lg={4}>
 				<Converter />
 			</Grid>
 		</Grid>

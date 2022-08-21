@@ -1,3 +1,16 @@
+@import '../../css/mixins';
+
+.table {
+	@include scroll;
+}
+
+.head {
+	th {
+		color: #f9fafb;
+		background-color: #9ca3af;
+	}
+}
+
 .img {
 	margin: 0 auto;
 	display: block;
@@ -9,7 +22,8 @@
 	cursor: pointer;
 	transition: all 0.15s linear;
 
-	&:hover {
-		background-color: #e5e7eb;
+	&:hover,
+	&.active {
+		background-color: #f3f4f6;
 	}
 }
