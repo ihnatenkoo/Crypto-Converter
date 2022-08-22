@@ -1,5 +1,9 @@
 import { FC, ReactNode } from 'react';
+
 import Container from '@mui/material/Container';
+
+import Header from '../components/Header/Header';
+
 import s from './MainLayout.module.scss';
 
 interface IMainLayout {
@@ -8,9 +12,12 @@ interface IMainLayout {
 
 const MainLayout: FC<IMainLayout> = ({ children }) => {
 	return (
-		<Container maxWidth="lg" className={s.layout}>
-			{children}
-		</Container>
+		<>
+			<Header />
+			<Container maxWidth="lg" className={s.layout}>
+				{children}
+			</Container>
+		</>
 	);
 };
 

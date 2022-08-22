@@ -26,7 +26,7 @@
 		&__icon {
 			transition: transform 0.3s ease-in;
 			&:hover {
-				color: var(--gold);
+				color: var(--orange);
 				transform: translateY(-50%) rotate(360deg);
 			}
 		}
