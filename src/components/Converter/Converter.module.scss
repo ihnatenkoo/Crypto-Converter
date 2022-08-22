@@ -1,6 +1,34 @@
 .converter {
-	padding: 20px;
+	position: relative;
+	padding: 20px 35px 10px 20px;
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
+
+	&__icon {
+		position: absolute;
+		top: 53%;
+		right: 5px;
+		transform: translateY(-50%);
+
+		color: var(--accent);
+		user-select: none;
+	}
+
+	&__rate {
+		display: block;
+		text-align: center;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.converter {
+		&__icon {
+			transition: transform 0.3s ease-in;
+			&:hover {
+				color: var(--gold);
+				transform: translateY(-50%) rotate(360deg);
+			}
+		}
+	}
 }

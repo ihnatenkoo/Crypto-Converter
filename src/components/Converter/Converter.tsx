@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { MouseEvent, ChangeEvent, FC, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import Paper from '@mui/material/Paper';
@@ -42,6 +42,12 @@ const Converter: FC = observer(() => {
 		toAmount = amount;
 	}
 
+	const handleSwitchCurrency = (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		setFromCurrency(toCurrency);
+		setToCurrency(fromCurrency);
+	};
+
 	const handleFromAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setAmount(+e.target.value);
 		setAmountInFromCurrency(true);
@@ -81,10 +87,13 @@ const Converter: FC = observer(() => {
 					value={toAmount}
 					onChangeValue={handleToAmountChange}
 				/>
-				<Typography variant="overline">
-					1 {fromCurrency} = {exchangeRate} {toCurrency}
-				</Typography>
+				<button className={s.converter__icon} onClick={handleSwitchCurrency}>
+					<span className="material-icons-outlined">currency_exchange</span>
+				</button>
 			</Box>
+			<Typography variant="overline" className={s.converter__rate}>
+				1 {fromCurrency} = {exchangeRate} {toCurrency}
+			</Typography>
 		</Paper>
 	);
 });
