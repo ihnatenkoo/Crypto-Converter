@@ -6,8 +6,10 @@
 
 .head {
 	th {
-		color: #f9fafb;
-		background-color: #9ca3af;
+		padding: 16px 0;
+		color: var(--white);
+		background-color: var(--accent);
+		text-align: center;
 	}
 }
 
@@ -21,9 +23,40 @@
 .row {
 	cursor: pointer;
 	transition: all 0.15s linear;
+	td {
+		padding: 16px 0;
+		text-align: center;
+	}
 
 	&:hover,
 	&.active {
-		background-color: #f3f4f6;
+		background-color: var(--gray-light);
+	}
+}
+
+.stats {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0 3px;
+
+	&__icon {
+		color: var(--accent);
+		font-size: 14px !important;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.head {
+		th {
+			padding: 10px 7px;
+		}
+	}
+
+	.row {
+		td {
+			padding: 16px 6px;
+			font-size: 13px;
+		}
 	}
 }

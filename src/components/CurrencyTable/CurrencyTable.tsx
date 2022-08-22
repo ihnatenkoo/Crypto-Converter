@@ -18,7 +18,7 @@ export interface ICoin {
 	fullName: string;
 	imageUrl: string;
 	price: number;
-	volume24Hour: number;
+	change24Hour: number;
 }
 
 const CurrencyTable: FC = observer(() => {
@@ -50,7 +50,7 @@ const CurrencyTable: FC = observer(() => {
 							<TableCell align="left">Name</TableCell>
 							<TableCell align="left">Abbrev</TableCell>
 							<TableCell align="left">Cost</TableCell>
-							<TableCell align="left">24h</TableCell>
+							<TableCell align="left">24Hour</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -72,8 +72,21 @@ const CurrencyTable: FC = observer(() => {
 									</TableCell>
 									<TableCell>{coin.fullName}</TableCell>
 									<TableCell>{coin.name}</TableCell>
-									<TableCell>${coin.price}</TableCell>
-									<TableCell>${coin.volume24Hour}</TableCell>
+									<TableCell>{coin.price}$</TableCell>
+									<TableCell>
+										<div className={s.stats}>
+											<span>{coin.change24Hour}$</span>
+											<span
+												className={`${s.stats__icon} material-icons-outlined`}
+											>
+												{coin.change24Hour === 0
+													? ''
+													: coin.change24Hour > 0
+													? 'north_east'
+													: 'south_east'}
+											</span>
+										</div>
+									</TableCell>
 								</TableRow>
 							))}
 					</TableBody>

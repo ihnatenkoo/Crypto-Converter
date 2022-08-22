@@ -41,13 +41,18 @@ const ConverterItem: FC<IConverterItem> = observer(
 					label="Currency"
 					value={currency}
 					onChange={changeCurrencyHandler}
+					className={s.select}
 				>
 					{allCoins.map((coin) => (
-						<MenuItem value={coin.name} key={coin.fullName}>
+						<MenuItem
+							value={coin.name}
+							key={coin.fullName}
+							className={s.select__item}
+						>
 							<img
 								src={coin.imageUrl}
 								alt="coin icon"
-								className={s.converter__img}
+								className={s.select__img}
 							/>
 							{coin.name}
 						</MenuItem>

@@ -7,6 +7,17 @@
 			flex: 1;
 		}
 	}
+}
+
+.select {
+	padding: 40px;
+
+	&__item,
+	div > div {
+		display: flex;
+		align-items: center;
+		gap: 0 5px;
+	}
 
 	&__img {
 		width: 25px;

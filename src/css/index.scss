@@ -1,4 +1,4 @@
-@import './mui.scss';
+@import 'material-icons/iconfont/material-icons.css';
 @import './mixins.scss';
 
 :root {
@@ -16,6 +16,10 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-text-size-adjust: 100%;
+
+	--accent: #9ca3af;
+	--gray-light: #f3f4f6;
+	--white: #fff;
 }
 
 a {
@@ -64,9 +68,3 @@ button:focus-visible {
 		background-color: #f9f9f9;
 	}
 }
-
-// .css-1ex1afd-MuiTableCell-root,
-// .css-y8ay40-MuiTableCell-root {
-// 	padding: 10px 5px !important;
-// 	font-size: 13px !important;
-// }
