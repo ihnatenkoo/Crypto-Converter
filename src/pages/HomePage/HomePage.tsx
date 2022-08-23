@@ -5,7 +5,7 @@ import CurrencyTable from '../../components/CurrencyTable/CurrencyTable';
 
 const HomePage = () => {
 	return (
-		<Grid container spacing={2} wrap="wrap-reverse">
+		<Grid container spacing={{ xs: 4, lg: 2 }} wrap="wrap-reverse">
 			<Grid item xs={12} lg={8}>
 				<CurrencyTable />
 			</Grid>

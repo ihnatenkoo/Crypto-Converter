@@ -14,9 +14,7 @@ const MainLayout: FC<IMainLayout> = ({ children }) => {
 	return (
 		<>
 			<Header />
-			<Container maxWidth="lg" className={s.layout}>
-				{children}
-			</Container>
+			<Container maxWidth="lg">{children}</Container>
 		</>
 	);
 };

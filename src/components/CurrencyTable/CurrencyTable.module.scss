@@ -14,7 +14,7 @@
 }
 
 .img {
-	margin: 0 auto;
+	margin-left: auto;
 	display: block;
 	width: 35px;
 	height: 35px;
@@ -23,6 +23,8 @@
 .row {
 	cursor: pointer;
 	transition: all 0.15s linear;
+
+	th,
 	td {
 		padding: 16px 0;
 		text-align: center;
@@ -46,7 +48,19 @@
 	}
 }
 
+.green {
+	background-color: var(--green-light);
+}
+
+.red {
+	background-color: var(--red-light);
+}
+
 @media screen and (max-width: 600px) {
+	.table {
+		max-height: 533px;
+	}
+
 	.head {
 		th {
 			padding: 10px 7px;

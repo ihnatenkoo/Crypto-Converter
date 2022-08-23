@@ -7,10 +7,6 @@
 	line-height: 24px;
 	font-weight: 400;
 
-	color-scheme: light dark;
-	color: rgba(255, 255, 255, 0.87);
-	background-color: #242424;
-
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -18,16 +14,21 @@
 	-webkit-text-size-adjust: 100%;
 
 	--accent: #9ca3af;
+	--a: #f9fafb;
 	--gray-light: #f3f4f6;
 	--gray-dark: #6b7280;
 	--white: #fff;
 	--orange: #ff9400;
+	--green-light: #dcfce7;
+	--red-light: #fee2e2;
 }
 
 body {
 	@include scroll;
+
 	margin: 0;
 	min-width: 320px;
+	background-color: var(--a);
 }
 
 a {
@@ -47,14 +48,4 @@ button {
 	font-family: inherit;
 	background-color: transparent;
 	cursor: pointer;
-}
-
-@media (prefers-color-scheme: light) {
-	:root {
-		color: #213547;
-		background-color: #ffffff;
-	}
-	a:hover {
-		color: #747bff;
-	}
 }

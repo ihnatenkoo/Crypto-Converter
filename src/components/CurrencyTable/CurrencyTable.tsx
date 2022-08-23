@@ -22,13 +22,16 @@ export interface ICoin {
 }
 
 const CurrencyTable: FC = observer(() => {
+	const fetchCoins = currenciesStore.fetchCoins;
 	const allCoins = currenciesStore.getCoins;
 	const setSelectedCoin = currenciesStore.setSelectedCoin;
+	const diffPrices = currenciesStore.getDiffPrices;
 
 	const [activeRow, setActiveRow] = useState('');
 
 	useEffect(() => {
-		currenciesStore.fetchCoins();
+		const fetchInterval = setInterval(() => fetchCoins(), 10000);
+		return () => clearInterval(fetchInterval);
 	}, []);
 
 	useEffect(() => {
@@ -42,7 +45,7 @@ const CurrencyTable: FC = observer(() => {
 
 	return (
 		<Paper sx={{ width: '100%', overflow: 'hidden' }} elevation={2}>
-			<TableContainer sx={{ maxHeight: 533 }} className={s.table}>
+			<TableContainer className={s.table}>
 				<Table stickyHeader aria-label="sticky table">
 					<TableHead className={s.head}>
 						<TableRow>
@@ -72,7 +75,17 @@ const CurrencyTable: FC = observer(() => {
 									</TableCell>
 									<TableCell>{coin.fullName}</TableCell>
 									<TableCell>{coin.name}</TableCell>
-									<TableCell>{coin.price}$</TableCell>
+									<TableCell
+										className={
+											`${diffPrices[coin.name]}` === 'green'
+												? s.green
+												: `${diffPrices[coin.name]}` === 'red'
+												? s.red
+												: ''
+										}
+									>
+										{coin.price}$
+									</TableCell>
 									<TableCell>
 										<div className={s.stats}>
 											<span>{coin.change24Hour}$</span>
