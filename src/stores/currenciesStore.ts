@@ -76,8 +76,9 @@ const initialMockCoins = [
 	},
 ];
 
+type TColor = 'green' | 'red';
 interface IDiffPrices {
-	[key: string]: string;
+	[key: string]: { color: TColor; diff: number };
 }
 class CurrenciesStore {
 	private coins: Array<ICoin> = initialMockCoins;
@@ -128,10 +129,12 @@ class CurrenciesStore {
 					(coin) => coin.name === actualCoinObj.name
 				) ?? { name: '', price: 0 };
 
-				const color: string =
+				const color: TColor =
 					actualCoinObj.price > oldCoinObj.price ? 'green' : 'red';
 
-				accumulator[actualCoinObj.name] = color;
+				const diff = actualCoinObj.price - oldCoinObj.price;
+
+				accumulator[actualCoinObj.name] = { color, diff };
 
 				return accumulator;
 			},

@@ -53,7 +53,8 @@ const CurrencyTable: FC = observer(() => {
 							<TableCell align="left">Name</TableCell>
 							<TableCell align="left">Abbrev</TableCell>
 							<TableCell align="left">Cost</TableCell>
-							<TableCell align="left">24Hour</TableCell>
+							<TableCell align="left">LiveDiff</TableCell>
+							<TableCell align="left">24HDiff</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -77,14 +78,17 @@ const CurrencyTable: FC = observer(() => {
 									<TableCell>{coin.name}</TableCell>
 									<TableCell
 										className={
-											`${diffPrices[coin.name]}` === 'green'
+											`${diffPrices[coin.name]?.color}` === 'green'
 												? s.green
-												: `${diffPrices[coin.name]}` === 'red'
+												: `${diffPrices[coin.name]?.color}` === 'red'
 												? s.red
 												: ''
 										}
 									>
 										{coin.price}$
+									</TableCell>
+									<TableCell>
+										{diffPrices[coin.name]?.diff.toFixed(2) ?? 0}
 									</TableCell>
 									<TableCell>
 										<div className={s.stats}>
