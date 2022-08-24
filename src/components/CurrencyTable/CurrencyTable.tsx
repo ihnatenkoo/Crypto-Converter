@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import Table from '@mui/material/Table';
@@ -24,23 +24,18 @@ export interface ICoin {
 const CurrencyTable: FC = observer(() => {
 	const fetchCoins = currenciesStore.fetchCoins;
 	const allCoins = currenciesStore.getCoins;
+	const selectedCoin = currenciesStore.getSelectedCoin;
 	const setSelectedCoin = currenciesStore.setSelectedCoin;
 	const diffPrices = currenciesStore.getDiffPrices;
 
-	const [activeRow, setActiveRow] = useState('');
-
 	useEffect(() => {
+		setSelectedCoin(allCoins[0]?.name);
 		const fetchInterval = setInterval(() => fetchCoins(), 10000);
 		return () => clearInterval(fetchInterval);
 	}, []);
 
-	useEffect(() => {
-		setActiveRow(allCoins[0]?.name ?? '');
-	}, [allCoins]);
-
 	const handleRowClick = (name: string) => {
 		setSelectedCoin(name);
-		setActiveRow(name);
 	};
 
 	return (
@@ -63,7 +58,7 @@ const CurrencyTable: FC = observer(() => {
 								<TableRow
 									key={coin.name}
 									className={`${s.row} ${
-										activeRow === coin.name ? s.active : ''
+										selectedCoin === coin.name ? s.active : ''
 									}`}
 									onClick={() => handleRowClick(coin.name)}
 								>
@@ -87,9 +82,7 @@ const CurrencyTable: FC = observer(() => {
 									>
 										{coin.price}$
 									</TableCell>
-									<TableCell>
-										{diffPrices[coin.name]?.diff.toFixed(2) ?? 0}
-									</TableCell>
+									<TableCell>{diffPrices[coin.name]?.diff ?? 0}</TableCell>
 									<TableCell>
 										<div className={s.stats}>
 											<span>{coin.change24Hour}$</span>

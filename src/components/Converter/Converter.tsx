@@ -14,19 +14,21 @@ import s from './Converter.module.scss';
 const Converter: FC = observer(() => {
 	const allCoins = currenciesStore.getCoins;
 	const selectedCoin = currenciesStore.getSelectedCoin;
+	const setSelectedCoin = currenciesStore.setSelectedCoin;
+
 	const initialFrom = allCoins[0]?.name ?? '';
 	const initialTo = allCoins[1]?.name ?? '';
 
 	const [fromCurrency, setFromCurrency] = useState<string>('');
 	const [toCurrency, setToCurrency] = useState<string>('');
 	const [exchangeRate, setExchangeRate] = useState<number>(0);
-	const [amount, setAmount] = useState<number>(0);
+	const [amount, setAmount] = useState<number>(1);
 	const [amountInFromCurrency, setAmountInFromCurrency] =
 		useState<boolean>(true);
 
 	useEffect(() => {
 		setFromCurrency(selectedCoin || initialFrom);
-		setToCurrency(initialTo);
+		setToCurrency(toCurrency || initialTo);
 	}, [initialFrom, initialTo, selectedCoin]);
 
 	useEffect(() => {
@@ -41,12 +43,6 @@ const Converter: FC = observer(() => {
 		fromAmount = +(amount / exchangeRate).toFixed(7);
 		toAmount = amount;
 	}
-
-	const handleSwitchCurrency = (e: MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
-		setFromCurrency(toCurrency);
-		setToCurrency(fromCurrency);
-	};
 
 	const handleFromAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setAmount(+e.target.value);
@@ -67,6 +63,18 @@ const Converter: FC = observer(() => {
 		if (priceFrom && priceTo) setExchangeRate(priceFrom / priceTo);
 	};
 
+	const onChangeCurrencyTop = (coinName: string) => {
+		setFromCurrency(coinName);
+		setSelectedCoin(coinName);
+	};
+
+	const handleSwitchCurrency = (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		setFromCurrency(toCurrency);
+		setToCurrency(fromCurrency);
+		setSelectedCoin(toCurrency);
+	};
+
 	return (
 		<Paper elevation={2}>
 			<Box
@@ -77,7 +85,7 @@ const Converter: FC = observer(() => {
 			>
 				<ConverterItem
 					currency={fromCurrency}
-					onChangeCurrency={setFromCurrency}
+					onChangeCurrency={onChangeCurrencyTop}
 					value={fromAmount}
 					onChangeValue={handleFromAmountChange}
 				/>

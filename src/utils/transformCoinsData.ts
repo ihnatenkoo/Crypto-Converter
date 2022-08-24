@@ -6,6 +6,6 @@ export const transformCoinsData = (data: Array<any>): Array<ICoin> => {
 		fullName: coin.CoinInfo.FullName,
 		imageUrl: `https://cryptocompare.com${coin.CoinInfo.ImageUrl}`,
 		price: +coin.RAW.USD.PRICE.toFixed(4),
-		change24Hour: +coin.RAW.USD.CHANGE24HOUR.toFixed(4),
+		change24Hour: +coin.RAW.USD.CHANGE24HOUR.toFixed(3),
 	}));
 };

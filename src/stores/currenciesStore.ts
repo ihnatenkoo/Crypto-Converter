@@ -23,7 +23,7 @@ const initialMockCoins = [
 		fullName: 'Tether',
 		imageUrl: 'https://cryptocompare.com/media/37746338/usdt.png',
 		price: 0.9998,
-		change24Hour: -0.0002,
+		change24Hour: -0.02,
 	},
 	{
 		name: 'BUSD',
@@ -58,27 +58,27 @@ const initialMockCoins = [
 		fullName: 'XRP',
 		imageUrl: 'https://cryptocompare.com/media/38553096/xrp.png',
 		price: 0.3339,
-		change24Hour: -0.0101,
+		change24Hour: -0.01,
 	},
 	{
 		name: 'ADA',
 		fullName: 'Cardano',
 		imageUrl: 'https://cryptocompare.com/media/37746235/ada.png',
 		price: 0.4481,
-		change24Hour: -0.0184,
+		change24Hour: -0.184,
 	},
 	{
 		name: 'CHZ',
 		fullName: 'Chiliz',
 		imageUrl: 'https://cryptocompare.com/media/37747540/chz.png',
 		price: 0.1997,
-		change24Hour: 0.0132,
+		change24Hour: 0.032,
 	},
 ];
 
 type TColor = 'green' | 'red';
 interface IDiffPrices {
-	[key: string]: { color: TColor; diff: number };
+	[key: string]: { color: TColor; diff: number | string };
 }
 class CurrenciesStore {
 	private coins: Array<ICoin> = initialMockCoins;
@@ -132,7 +132,10 @@ class CurrenciesStore {
 				const color: TColor =
 					actualCoinObj.price > oldCoinObj.price ? 'green' : 'red';
 
-				const diff = actualCoinObj.price - oldCoinObj.price;
+				let diff: string | number = +(
+					actualCoinObj.price - oldCoinObj.price
+				).toFixed(2);
+				diff = diff > 0 ? `+${diff}` : diff;
 
 				accumulator[actualCoinObj.name] = { color, diff };
 

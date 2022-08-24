@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, FC, SetStateAction } from 'react';
+import { ChangeEvent, FC } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import TextField from '@mui/material/TextField';
@@ -11,19 +11,13 @@ import s from './ConverterItem.module.scss';
 interface IConverterItem {
 	currency: string;
 	value: number;
-	onChangeCurrency: Dispatch<SetStateAction<string>>;
+	onChangeCurrency: (coinName: string) => void;
 	onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const ConverterItem: FC<IConverterItem> = observer(
 	({ currency, onChangeCurrency, value, onChangeValue }) => {
 		const allCoins = currenciesStore.getCoins;
-		const setSelectedCoin = currenciesStore.setSelectedCoin;
-
-		const changeCurrencyHandler = (e: ChangeEvent<HTMLInputElement>) => {
-			onChangeCurrency(e.target.value);
-			setSelectedCoin('');
-		};
 
 		return (
 			<div className={s.converter__item}>
@@ -40,7 +34,7 @@ const ConverterItem: FC<IConverterItem> = observer(
 					select
 					label="Currency"
 					value={currency}
-					onChange={changeCurrencyHandler}
+					onChange={(e) => onChangeCurrency(e.target.value)}
 					className={s.select}
 				>
 					{allCoins.map((coin) => (
