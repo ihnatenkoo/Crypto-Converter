@@ -10,7 +10,7 @@ import s from './ConverterItem.module.scss';
 
 interface IConverterItem {
 	currency: string;
-	value: number;
+	value: string | number;
 	onChangeCurrency: (coinName: string) => void;
 	onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -27,6 +27,10 @@ const ConverterItem: FC<IConverterItem> = observer(
 					variant="outlined"
 					value={value}
 					onChange={onChangeValue}
+					inputProps={{
+						min: 0,
+						maxLength: 12,
+					}}
 				/>
 
 				<TextField

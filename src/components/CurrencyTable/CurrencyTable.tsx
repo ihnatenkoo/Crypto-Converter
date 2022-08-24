@@ -53,7 +53,9 @@ const CurrencyTable: FC = observer(() => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{allCoins &&
+						{!allCoins ? (
+							<p className={s.loading}>Loading Table...</p>
+						) : (
 							allCoins.map((coin) => (
 								<TableRow
 									key={coin.name}
@@ -98,7 +100,8 @@ const CurrencyTable: FC = observer(() => {
 										</div>
 									</TableCell>
 								</TableRow>
-							))}
+							))
+						)}
 					</TableBody>
 				</Table>
 			</TableContainer>

@@ -16,41 +16,49 @@ const Converter: FC = observer(() => {
 	const selectedCoin = currenciesStore.getSelectedCoin;
 	const setSelectedCoin = currenciesStore.setSelectedCoin;
 
-	const initialFrom = allCoins[0]?.name ?? '';
-	const initialTo = allCoins[1]?.name ?? '';
+	const initialFromCurrency = allCoins[0]?.name ?? '';
+	const initialToCurrency = allCoins[1]?.name ?? '';
+
+	const [amount, setAmount] = useState<number | string>('1');
+
+	const [fromAmount, setFromAmount] = useState<number | string>(1);
+	const [toAmount, setToAmount] = useState<number | string>(1);
 
 	const [fromCurrency, setFromCurrency] = useState<string>('');
 	const [toCurrency, setToCurrency] = useState<string>('');
+
 	const [exchangeRate, setExchangeRate] = useState<number>(0);
-	const [amount, setAmount] = useState<number>(1);
 	const [amountInFromCurrency, setAmountInFromCurrency] =
 		useState<boolean>(true);
 
 	useEffect(() => {
-		setFromCurrency(selectedCoin || initialFrom);
-		setToCurrency(toCurrency || initialTo);
-	}, [initialFrom, initialTo, selectedCoin]);
+		setFromCurrency(selectedCoin || initialFromCurrency);
+		setToCurrency(toCurrency || initialToCurrency);
+	}, [initialFromCurrency, initialToCurrency, selectedCoin, toCurrency]);
 
 	useEffect(() => {
 		getExchangeRate();
 	}, [fromCurrency, toCurrency]);
 
-	let toAmount, fromAmount;
-	if (amountInFromCurrency) {
-		fromAmount = amount;
-		toAmount = +(amount * exchangeRate).toFixed(7);
-	} else {
-		fromAmount = +(amount / exchangeRate).toFixed(7);
-		toAmount = amount;
-	}
+	useEffect(() => {
+		if (!isNaN(amount as number)) {
+			if (amountInFromCurrency) {
+				setFromAmount(amount);
+				setToAmount(((amount as number) * exchangeRate).toFixed(7));
+			} else {
+				setFromAmount(((amount as number) / exchangeRate).toFixed(7));
+				setToAmount(amount);
+			}
+		}
+	}, [amount, exchangeRate, amountInFromCurrency]);
 
-	const handleFromAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setAmount(+e.target.value);
+	const onChangeFromAmount = (e: ChangeEvent<HTMLInputElement>) => {
+		setAmount(e.target.value);
 		setAmountInFromCurrency(true);
 	};
 
-	const handleToAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setAmount(+e.target.value);
+	const onChangeToAmount = (e: ChangeEvent<HTMLInputElement>) => {
+		setAmount(e.target.value);
 		setAmountInFromCurrency(false);
 	};
 
@@ -87,13 +95,13 @@ const Converter: FC = observer(() => {
 					currency={fromCurrency}
 					onChangeCurrency={onChangeCurrencyTop}
 					value={fromAmount}
-					onChangeValue={handleFromAmountChange}
+					onChangeValue={onChangeFromAmount}
 				/>
 				<ConverterItem
 					currency={toCurrency}
 					onChangeCurrency={setToCurrency}
 					value={toAmount}
-					onChangeValue={handleToAmountChange}
+					onChangeValue={onChangeToAmount}
 				/>
 				<button className={s.converter__icon} onClick={handleSwitchCurrency}>
 					<span className="material-icons-outlined">currency_exchange</span>
