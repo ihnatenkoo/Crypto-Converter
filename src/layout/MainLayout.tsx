@@ -4,8 +4,6 @@ import Container from '@mui/material/Container';
 
 import Header from '../components/Header/Header';
 
-import s from './MainLayout.module.scss';
-
 interface IMainLayout {
 	children: ReactNode;
 }
